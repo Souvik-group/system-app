@@ -1,9 +1,15 @@
 {
   "version": 2,
   "builds": [
-    { "src": "principal.py", "use": "@vercel/python" }
+    {
+      "src": "principal/principal.py",
+      "use": "@vercel/python"
+    }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "principal.py" }
+    {
+      "src": "/(.*)",
+      "dest": "principal/principal.py"
+    }
   ]
 }

@@ -3,12 +3,29 @@ from flask import Flask,render_template,session,request,redirect,url_for
 import firebase_admin
 from firebase_admin import credentials, firestore
 from flask_mail import Mail, Message
+from dotenv import load_dotenv
 import random
 import string
+import base64
+import json
 
-cred = credentials.Certificate('serviceAccountKey.json')
+
+load_dotenv()
+
+
+firebase_key_base64 = os.environ.get("BASE64_JSON_FILE")
+# print(str(os.environ.get("BASE64_JSON_FILE")))
+
+firebase_key_json = base64.b64decode(firebase_key_base64).decode("utf-8")
+firebase_key_dict = json.loads(firebase_key_json)
+
+cred = credentials.Certificate(firebase_key_dict)
+# print("#################################################")
+# print(cred)
 firebase_admin.initialize_app(cred)
+
 db = firestore.client()
+
 app= Flask(__name__)
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
@@ -20,6 +37,8 @@ mail = Mail(app)
 
 @app.route('/')
 def res_homepage():
+    # print(os.environ.get("FIREBASE_KEY_PATH"))  # Example: print the FIREBASE_KEY_PATH environment variable
+    # print( "chack2"+str(os.environ.get("BASE64_JSON_FILE")))
     return render_template('add_admin.html')
 
 @app.route('/add_adminlogin', methods=["GET", "POST"])

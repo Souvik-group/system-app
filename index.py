@@ -84,8 +84,8 @@ def add_adminlogin():
         return render_template('add_successful.html', name=name, email=email, password=password)
     return render_template('add_adminlogin.html')
 
-if __name__=="__main__":
-    app.run(debug=True, port=3005)
+# if __name__=="__main__":
+#     app.run(debug=True, port=3005)
 
 def handler(environ, start_response):
     return app(environ, start_response)
